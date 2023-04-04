@@ -1,21 +1,48 @@
-First import ``text_indentation``
+==============================
+How to use 5-text_indentation.py
+==============================
 
+Import file
     >>> text_indentation = __import__('5-text_indentation').text_indentation
 
-Now use it:
+Correct Usage:
 
-Non string input:
-    >>> text_indentation(3)
-    Traceback (most recent call last):
-    ...
-    TypeError: text must be a string
+    >>> t=" : . ? "
 
-No special char in string input:
-    >>> text_indentation("hi")
-    hi
+Output for this function should be las this
+>>> t="Hello. : \nI am a string? .\n"
 
-No input:
-    >>> text_indentation()
-    Traceback (most recent call last):
-    ...
-    TypeError: text_indentation() missing 1 required positional argument: 'text'
+
+t is equal to: 
+
+>>> t=" : . ? "
+
+
+On Errors:
+
+empty string: 
+>>> text_indentation()
+Traceback (most recent call last):
+TypeError: text_indentation() missing 1 required positional argument: 'text'
+
+more than one string
+>>> text_indentation("hi", "how", "you")
+Traceback (most recent call last):
+TypeError: text_indentation() takes 1 positional argument but 3 were given
+
+>>> text_indentation(19)
+Traceback (most recent call last):
+TypeError: text must be a string
+
+>>> text_indentation("")
+
+>>> text_indentation()
+Traceback (most recent call last):
+TypeError: text_indentation() missing 1 required positional argument: 'text'
+
+>>> text_indentation("Meseret.")
+Meseret.
+<BLANKLINE>
+
+>>> text_indentation("Hello")
+Hello
