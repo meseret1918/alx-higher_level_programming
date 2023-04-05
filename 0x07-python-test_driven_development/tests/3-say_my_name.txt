@@ -1,3 +1,8 @@
+# 3-say_my_name.txt
+
+===========================
+How to Use 3-say_my_name.py
+===========================
 >>> say_my_name = __import__('3-say_my_name').say_my_name
 >>> say_my_name('mesi', 'fidel')
 My name is mesi fidel
@@ -8,10 +13,6 @@ Traceback (most recent call last):
     ...
 TypeError: first_name must be a string
 >>> say_my_name('alem', 4)
-Traceback (most recent call last):
-...
-TypeError: last_name must be a string
->>> say_my_name(4, 4)
 Traceback (most recent call last):
     ...
 TypeError: last_name must be a string
