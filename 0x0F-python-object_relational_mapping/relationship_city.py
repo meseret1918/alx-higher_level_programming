@@ -1,16 +1,17 @@
 #!/usr/bin/python3
-from sqlalchemy import Column, Integer, String, text, ForeignKey
+"""
+Contains the class definition of a City
+"""
 from relationship_state import Base
-"""
-    Module that performs creates a States class based off of Base.
-"""
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
 
 
 class City(Base):
     """
-        The ``City`` class which inherits from ``Base`` class.
+    Class that defines each city
     """
     __tablename__ = 'cities'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, unique=True, nullable=False, primary_key=True)
     name = Column(String(128), nullable=False)
-    state_id = Column(Integer, ForeignKey('states.id'), nullable=False)
+    state_id = Column(Integer, ForeignKey("states.id"), nullable=False)
