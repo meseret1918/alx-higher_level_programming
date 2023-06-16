@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Script that changes the name of a State object to the database
+Script that adds the State object “Louisiana” to the database
 Using module SQLAlchemy
 """
 
@@ -18,8 +18,10 @@ if __name__ == "__main__":
     # create a Session
     session = Session()
     Base.metadata.create_all(engine)
-    state_update = session.query(State).filter_by(id='2').first()
-    state_update.name = "New Mexico"
+
+    add_state = State(name="Louisiana")
+    session.add(add_state)
     # commit and close session
     session.commit()
+    print(add_state.id)
     session.close()
