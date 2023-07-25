@@ -3,19 +3,10 @@
 const request = require('request');
 const fs = require('fs');
 
-const url = process.argv[2];
-const filePath = process.argv[3];
-
-request(url, (error, response, body) => {
-  if (error) {
-    console.error(error);
-  } else {
-    fs.writeFile(filePath, body, 'utf-8', (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(`Body response has been saved to ${filePath}`);
-      }
-    });
-  }
+request(process.argv[2], function (_err, _res, body) {
+  fs.writeFile(process.argv[3], body, 'utf8', function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
 });
