@@ -1,8 +1,3 @@
-#!/usr/bin/node
-// const fs = require('fs');
-const request = require('request');
-const pathUrl = process.argv[2];
-
 request.get(pathUrl, function (error, resp, body) {
   if (error) throw error;
   const user = {};
@@ -15,5 +10,12 @@ request.get(pathUrl, function (error, resp, body) {
       }
     }
   }
-  console.log(user);
+  
+  const userCount = Object.keys(user).length;
+  if (userCount >= 2) {
+    console.log(JSON.stringify(user));
+  } else {
+    console.log(user);
+  }
 });
+
