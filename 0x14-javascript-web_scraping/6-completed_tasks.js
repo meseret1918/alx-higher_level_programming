@@ -1,3 +1,5 @@
+#!/usr/bin/node
+
 request.get(pathUrl, function (error, resp, body) {
   if (error) throw error;
   const user = {};
