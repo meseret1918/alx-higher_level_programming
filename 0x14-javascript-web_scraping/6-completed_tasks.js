@@ -1,16 +1,22 @@
 #!/usr/bin/node
+
 const request = require('request');
+
 request(process.argv[2], function (err, resp, body) {
   if (!err) {
     const data = JSON.parse(body);
-    const completedUsers = {};
+    const checkers = {};
     data.forEach((element) => {
-      if (element.completed && completedUsers[element.userId] === undefined) {
-        completedUsers[element.userId] = 1;
+      if (element.completed && checkers[element.userId] === undefined) {
+        checkers[element.userId] = 1;
       } else if (element.completed) {
-        completedUsers[element.userId] += 1;
+        checkers[element.userId] += 1;
       }
     });
-    console.log(completedUsers);
+
+    // Calculate the total number of checkers
+    const totalCheckers = Object.values(checkers).reduce((acc, count) => acc + count, 0);
+
+    console.log(`Total Checkers: ${totalCheckers}`);
   }
 });
