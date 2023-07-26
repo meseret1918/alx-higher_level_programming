@@ -13,6 +13,10 @@ request(process.argv[2], function (error, response, body) {
         completed[todo.userId] += 1;
       }
     });
-    console.log(completed);
+
+    // Customized output
+    Object.entries(completed).forEach(([userId, count]) => {
+      console.log(`User ID: ${userId}, Completed Todos: ${count}`);
+    });
   }
 });
