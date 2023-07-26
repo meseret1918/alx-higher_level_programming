@@ -1,26 +1,28 @@
 #!/usr/bin/node
-/**
-  compute number of tasks completed by user id
-  usage: /6-completed_tasks.js <API URL>
-  */
-const myArgs = process.argv.slice(2);
+
 const request = require('request');
-const id_ = [];
-const result = {};
-request(myArgs[0], function (error, response, body) {
-  let i;
-  if (!error) {
-    const json_ = JSON.parse(body);
-    const len = json_.length;
-    for (i = 0; i < len; i++) {
-      if (json_[i].completed) {
-        id_.push(json_[i].userId);
+
+const apiUrl = 'https://jsonplaceholder.typicode.com/todos';
+
+request(apiUrl, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    const todos = JSON.parse(body);
+    const completedUsers = {};
+
+    todos.forEach((todo) => {
+      if (todo.completed) {
+        if (completedUsers[todo.userId] === undefined) {
+          completedUsers[todo.userId] = 1;
+        } else {
+          completedUsers[todo.userId]++;
+        }
       }
+    });
+
+    for (const userId in completedUsers) {
+      console.log(`User ID: ${userId}, Completed Tasks: ${completedUsers[userId]}`);
     }
-    for (let j = 0; j < id_.length; ++j) {
-      if (!result[id_[j]]) { result[id_[j]] = 0; }
-      ++result[id_[j]];
-    }
+  } else {
+    console.error('Error retrieving data from the API:', error);
   }
-  console.log(result);
 });
