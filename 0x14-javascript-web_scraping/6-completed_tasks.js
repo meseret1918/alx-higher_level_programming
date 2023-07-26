@@ -1,23 +1,63 @@
 #!/usr/bin/node
 
-request.get(pathUrl, function (error, resp, body) {
-  if (error) throw error;
-  const user = {};
-  for (const task of JSON.parse(body)) {
-    if (task.completed) {
-      if (user[task.userId]) {
-        user[task.userId]++;
+const URL = process.argv[2];
+const request = require('request');
+
+request.get(URL, { json: true }, (error, response, body) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  if (response.statusCode !== 200) {
+    console.log(error);
+    return;
+  }
+
+  const todos = {};
+  body.forEach((todo) => {
+    if (todo.completed) {
+      if (!todos[todo.userId]) {
+        todos[todo.userId] = 1;
       } else {
-        user[task.userId] = 1;
+        todos[todo.userId]++;
       }
     }
+  });
+
+  const length = Object.keys(todos).length;
+  if (length === 0) {
+    console.log('{}');
+    return;
   }
-  
-  const userCount = Object.keys(user).length;
-  if (userCount >= 2) {
-    console.log(JSON.stringify(user));
+
+  if (length === 2) {
+    let output = '{ ';
+    let isFirst = true;
+    for (const key in todos) {
+      if (!isFirst) {
+        output += ', ';
+      }
+      output += `'${key}': ${todos[key]}`;
+      isFirst = false;
+    }
+    output += ' }';
+    console.log(output);
   } else {
-    console.log(user);
+    let task = 0;
+    for (const key in todos) {
+      if (task === 0) {
+        if (length !== 1) {
+          console.log('{ \'' + key + '\': ' + todos[key] + ',');
+        } else {
+          console.log('{ \'' + key + '\': ' + todos[key] + ' }');
+        }
+      } else if (task === length - 1) {
+        console.log('  \'' + key + '\': ' + todos[key] + ' }');
+      } else {
+        console.log(`  '${key}': ${todos[key]},`);
+      }
+      task++;
+    }
   }
 });
-
